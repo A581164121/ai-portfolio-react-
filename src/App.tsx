@@ -44,6 +44,19 @@ export default function App() {
     { name: 'Contact', id: 'contact' },
   ];
 
+  const handleEmailSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const target = e.currentTarget;
+    const name = (target.elements.namedItem('name') as HTMLInputElement).value;
+    const email = (target.elements.namedItem('email') as HTMLInputElement).value;
+    const message = (target.elements.namedItem('message') as HTMLTextAreaElement).value;
+    
+    // Constructing mailto link
+    const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+    window.location.href = `mailto:infolmakbar@gmail.com?subject=${subject}&body=${body}`;
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-cyan-500/30 font-sans overflow-x-hidden">
       {/* Navigation */}
@@ -387,9 +400,13 @@ export default function App() {
                     <span className="text-[10px] bg-slate-800 px-3 py-1 rounded-full text-slate-300 border border-slate-700">Tailwind</span>
                   </div>
                 </div>
-                <button className="flex items-center gap-2 text-white hover:text-cyan-400 transition-colors text-sm font-bold ml-2">
+                <a 
+                  href="#" 
+                  onClick={(e) => e.preventDefault()}
+                  className="flex items-center gap-2 text-white hover:text-cyan-400 transition-colors text-sm font-bold ml-2 no-underline"
+                >
                   Live Demo <ExternalLink size={14} />
-                </button>
+                </a>
               </div>
               <div className="order-1 lg:order-2 aspect-video rounded-2xl bg-gradient-to-tr from-cyan-900/40 to-blue-900/40 border border-slate-800 relative overflow-hidden group">
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -448,9 +465,14 @@ export default function App() {
                     <span className="text-[10px] bg-slate-800 px-3 py-1 rounded-full text-slate-300 border border-slate-700">CLI</span>
                   </div>
                 </div>
-                <button className="flex items-center gap-2 text-white hover:text-white transition-colors text-sm font-bold ml-2">
+                <a 
+                  href="https://github.com/akbarazizi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-white hover:text-cyan-400 transition-colors text-sm font-bold ml-2 no-underline"
+                >
                   View Source <Github size={14} />
-                </button>
+                </a>
               </div>
             </motion.div>
 
@@ -480,9 +502,13 @@ export default function App() {
                     <span className="text-[10px] bg-slate-800 px-3 py-1 rounded-full text-slate-300 border border-slate-700">AWS</span>
                   </div>
                 </div>
-                <button className="flex items-center gap-2 text-white hover:text-cyan-400 transition-colors text-sm font-bold ml-2">
+                <a 
+                  href="#"
+                  onClick={(e) => e.preventDefault()}
+                  className="flex items-center gap-2 text-white hover:text-cyan-400 transition-colors text-sm font-bold ml-2 no-underline"
+                >
                   Watch Process <ExternalLink size={14} />
-                </button>
+                </a>
               </div>
               <div className="order-1 lg:order-2 aspect-video rounded-2xl bg-slate-900 border border-slate-800 relative overflow-hidden group">
                  <div className="absolute inset-0 flex items-center justify-center">
@@ -569,23 +595,33 @@ export default function App() {
                   <div className="text-sm font-mono bg-slate-950 p-3 border border-slate-800 rounded">infolmakbar@gmail.com</div>
                 </div>
                 <button 
-                  onClick={() => window.open('https://wa.me/yourwhatsappnumber', '_blank')}
+                  onClick={() => window.open('https://wa.me/?text=Hi%20Muhammad%20Akbar%20Azizi,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect.', '_blank')}
                   className="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl font-bold text-sm transition-colors flex items-center justify-center gap-2"
                 >
                   <MessageCircle size={16} /> WhatsApp Message
                 </button>
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-slate-800 p-4 rounded-xl text-center flex flex-col items-center gap-2">
+                  <a 
+                    href="https://github.com/akbarazizi" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-slate-800 p-4 rounded-xl text-center flex flex-col items-center gap-2 hover:bg-slate-700 transition-colors cursor-pointer no-underline"
+                  >
                     <span className="text-[10px] text-slate-500 block">GITHUB</span>
                     <Github size={20} className="text-slate-300" />
-                  </div>
-                  <div className="bg-slate-800 p-4 rounded-xl text-center flex flex-col items-center gap-2">
+                  </a>
+                  <a 
+                    href="https://linkedin.com/in/akbarazizi" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-slate-800 p-4 rounded-xl text-center flex flex-col items-center gap-2 hover:bg-slate-700 transition-colors cursor-pointer no-underline"
+                  >
                     <span className="text-[10px] text-slate-500 block">LINKEDIN</span>
                     <Linkedin size={20} className="text-slate-300" />
-                  </div>
+                  </a>
                 </div>
               </div>
-              <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); alert("Thanks for your interest! In a real app, this would send an email."); }}>
+              <form className="space-y-4" onSubmit={handleEmailSubmit}>
                 <h3 className="text-sm font-bold text-white mb-2">Send a Message</h3>
                 <div>
                   <input 
